@@ -1,0 +1,58 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class HiddenFormServlet extends HttpServlet {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the session object
+        HttpSession session = request.getSession();
+
+        // Check if it's a new session or an existing one
+        if (session.isNew()) {
+            // Create a new session ID and store it in a hidden form field
+            String sessionId = session.getId();
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<h2>Welcome!</h2>");
+            out.println("<form action='HiddenFormServlet' method='post'>");
+            out.println("Enter your name: <input type='text' name='userName'><br>");
+            out.println("<input type='hidden' name='sessionId' value='" + sessionId + "'>");
+            out.println("<input type='submit' value='Submit'>");
+            out.println("</form>");
+        } else {
+            // Retrieve session ID from the hidden form field
+            String sessionId = request.getParameter("sessionId");
+            HttpSession retrievedSession = request.getSession(false); // Get session using ID
+
+            if (retrievedSession == null) {
+                // Session not found, potential tampering
+                response.sendRedirect("error.html"); // Handle error appropriately
+            } else {
+                String userName = (String) retrievedSession.getAttribute("userName");
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+                out.println("<h2>Hello, " + userName + "!</h2>");
+                out.println("<p>You are in an existing session.</p>");
+            }
+        }
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String userName = request.getParameter("userName");
+        String sessionId = request.getParameter("sessionId");
+        HttpSession session = request.getSession(false); // Get session using ID
+
+        if (session == null) {
+            // Session not found, potential tampering
+            response.sendRedirect("error.html"); // Handle error appropriately
+        } else {
+            session.setAttribute("userName", userName);
+            response.sendRedirect("HiddenFormServlet?sessionId=" + sessionId);
+        }
+    }
+}
