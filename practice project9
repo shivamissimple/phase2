@@ -1,0 +1,50 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class SessionTrackingServlet extends HttpServlet {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the session object
+        HttpSession session = request.getSession();
+
+        // Check if it's a new session or an existing one
+        if (session.isNew()) {
+            // Create a new session ID
+            String sessionId = session.getId();
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<h2>New Session Created</h2>");
+            out.println("<p>Your session ID is: " + sessionId + "</p>");
+        } else {
+            // Access existing session data
+            String userName = (String) session.getAttribute("userName");
+
+            if (userName == null) {
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+                out.println("<h2>Welcome Back!</h2>");
+                out.println("<form action='SessionTrackingServlet' method='post'>");
+                out.println("Enter your name: <input type='text' name='userName'><br>");
+                out.println("<input type='submit' value='Submit'>");
+                out.println("</form>");
+            } else {
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+                out.println("<h2>Hello, " + userName + "!</h2>");
+                out.println("<p>You are in an existing session.</p>");
+            }
+        }
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String userName = request.getParameter("userName");
+        HttpSession session = request.getSession();
+        session.setAttribute("userName", userName);
+        response.sendRedirect("SessionTrackingServlet");
+    }
+}
