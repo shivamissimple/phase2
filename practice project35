@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>JSP Session Handling Demonstration</title>
+</head>
+<body>
+
+<%
+    // Check if a session attribute is already set
+    String userName = (String) session.getAttribute("userName");
+    if (userName == null) {
+        // Create a new session and set the attribute
+        session.setAttribute("userName", "Guest");
+        out.println("Welcome, Guest! You have started a new session.");
+    } else {
+        out.println("Welcome back, " + userName + "!");
+    }
+%>
+
+<p>Your session ID is: <%= session.getId() %></p>
+
+<%-- Link to another page that uses the session --%>
+<a href="nextPage.jsp">Go to Next Page</a>
+
+</body>
+</html>
