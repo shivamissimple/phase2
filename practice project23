@@ -1,0 +1,34 @@
+import java.sql.*;
+
+public class JDBCDemo {
+    public static void main(String[] args) {
+        try {
+            // Load the JDBC driver (already done in previous example)
+
+            // Establish the connection
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            // Create a statement
+            Statement statement = connection.createStatement();
+
+            // Example of executing a SELECT query and processing the results
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM mytable");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id"); // Retrieve values by column name
+                String name = resultSet.getString(2); // Retrieve values by column index
+                System.out.println("ID: " + id + ", Name: " + name);
+            }
+
+            // Example of executing an INSERT query
+            int rowsUpdated = statement.executeUpdate("INSERT INTO mytable (name) VALUES ('New Name')");
+            System.out.println("Rows updated: " + rowsUpdated);
+
+            // Close resources (ensure this is always done)
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
