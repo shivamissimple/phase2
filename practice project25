@@ -1,0 +1,28 @@
+import java.sql.*;
+
+public class JDBCDemo {
+    public static void main(String[] args) {
+        try {
+            // Load the JDBC driver (already done in previous examples)
+
+            // Connect to the database server (without specifying a database yet)
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            // Create a statement
+            Statement statement = connection.createStatement();
+
+            // Execute the CREATE DATABASE query
+            String createDatabaseQuery = "CREATE DATABASE myNewDatabase"; // Adjust database name
+            statement.executeUpdate(createDatabaseQuery);
+
+            System.out.println("Database created successfully!");
+
+            // Close resources
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.err.println("Error creating database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
