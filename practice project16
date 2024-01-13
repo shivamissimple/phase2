@@ -1,0 +1,11 @@
+Session session = sessionFactory.openSession();
+Parent parent = session.load(Parent.class, 1L);
+
+// This triggers a database query (lazy loading)
+List<Child> children = parent.getChildren();
+
+for (Child child : children) {
+    System.out.println(child.getName());
+}
+
+session.close();
