@@ -1,0 +1,12 @@
+<hibernate-mapping>
+    <class name="com.example.Employee">
+        <id name="id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="name" type="string"/>
+        <list name="phoneNumbers" table="employee_phone_numbers">
+            <key column="employee_id"/>
+            <list-index column="phone_index"/> <element type="string"/>
+        </list>
+    </class>
+</hibernate-mapping>
