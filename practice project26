@@ -1,0 +1,3 @@
+String insertQuery = "INSERT INTO mytable (name, age) VALUES ('John Doe', 35)"; // Adjust table and column names
+int rowsAffected = statement.executeUpdate(insertQuery);
+System.out.println("Rows inserted: " + rowsAffected);
