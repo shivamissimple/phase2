@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>JSP Action Tags Demonstration</title>
+</head>
+<body>
+
+<%-- Forward to another page --%>
+<jsp:forward page="/nextPage.jsp" />
+
+<%-- Include a page at request time --%>
+<jsp:include page="/footer.jsp" />
+
+<%-- Set a bean property --%>
+<jsp:setProperty name="myBean" property="name" value="John Doe" />
+
+<%-- Use a bean property --%>
+<p>Welcome, <%= myBean.getName() %>!</p>
+
+<%-- Use a plugin (assuming a custom plugin is defined) --%>
+<jsp:plugin type="applet" codebase="/applets" code="MyApplet.class" width="200" height="100">
+    <jsp:params>
+        <jsp:param name="param1" value="value1" />
+        <jsp:param name="param2" value="value2" />
+    </jsp:params>
+</jsp:plugin>
+
+</body>
+</html>
