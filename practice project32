@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>JSP Implicit Objects Demonstration</title>
+</head>
+<body>
+
+<h2>Request Object</h2>
+<p>Request URL: <%= request.getRequestURL() %></p>
+<p>Request Method: <%= request.getMethod() %></p>
+<p>Client IP Address: <%= request.getRemoteAddr() %></p>
+
+<h2>Response Object</h2>
+<p>MIME Type: <%= response.getContentType() %></p>
+<p>Character Encoding: <%= response.getCharacterEncoding() %></p>
+
+<h2>Out Object</h2>
+<% out.println("This text is directly written using the out object."); %>
+
+<h2>Session Object</h2>
+<%
+String sessionMessage = (String) session.getAttribute("message");
+if (sessionMessage == null) {
+    out.println("No session message found.");
+} else {
+    out.println("Session message: " + sessionMessage);
+}
+%>
+
+<h2>Application Object</h2>
+<%
+int visitorCount = (int) application.getAttribute("visitorCount");
+if (visitorCount == 0) {
+    out.println("You are the first visitor!");
+} else {
+    out.println("You are visitor number " + visitorCount + ".");
+    application.setAttribute("visitorCount", visitorCount + 1);
+}
+%>
+
+</body>
+</html>
