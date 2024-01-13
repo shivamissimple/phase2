@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>  <%@ include file="header.jsp" %>  <!DOCTYPE html>
+<html>
+<head>
+<title>JSP Directives Demonstration</title>
+</head>
+<body>
+
+<%-- Taglib Directive (assuming a custom tag library is defined) --%>
+<%@ taglib uri="http://mytags.com/tags" prefix="mytags" %>
+
+<h2>Current Date and Time:</h2>
+<p><mytags:currentDate /></p>  <%-- Declaration for a local variable --%>
+<%! int myVariable = 10; %>
+
+<p>Value of myVariable: <%= myVariable %></p>
+
+</body>
+</html>
