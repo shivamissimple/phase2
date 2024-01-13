@@ -1,0 +1,24 @@
+import java.sql.*;
+
+public class JDBCDemo {
+    public static void main(String[] args) {
+        try {
+            // Load the JDBC driver and establish the connection (as shown in previous examples)
+
+            // Call the stored procedure
+            CallableStatement callableStatement = connection.prepareCall("{CALL my_procedure(?, ?)}");
+            callableStatement.setInt(1, 42); // Set input parameter
+            callableStatement.registerOutParameter(2, Types.INTEGER); // Register output parameter
+            callableStatement.execute();
+
+            int result = callableStatement.getInt(2); // Retrieve output value
+            System.out.println("Result: " + result);
+
+            // Close resources
+            callableStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
